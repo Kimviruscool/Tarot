@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 - Mystic Tarot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Serif+KR:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-container">
+        <div class="overlay"></div>
+    </div>
+
+    <a href="{{ url_for('main.index') }}" class="logo">Mystic Tarot</a>
+
+    <main class="auth-container">
+        <div class="auth-box">
+            <h1 class="auth-title">LOGIN</h1>
+
+            <form id="loginForm" class="auth-form">
+                <div class="input-group">
+                    <input type="email" id="email" placeholder="이메일" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" placeholder="비밀번호" required>
+                </div>
+
+                <button type="submit" class="auth-btn">로그인</button>
+            </form>
+
+            <div class="divider">
+                <span>OR</span>
+            </div>
+
+            <button type="button" class="kakao-btn">
+                <span class="kakao-icon">💬</span> 카카오계정으로 로그인
+            </button>
+
+            <div class="auth-links">
+                <a href="{{ url_for('main.signup') }}">회원가입</a>
+                <span class="sep">|</span>
+                <a href="#">비밀번호 찾기</a>
+            </div>
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='login.js') }}"></script>
+</body>
+
+</html>

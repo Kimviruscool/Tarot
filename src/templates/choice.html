@@ -1,10 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>타로 운세 선택</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='choice.css') }}">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Serif+KR:wght@400;700&display=swap"
+        rel="stylesheet">
 </head>
-<body>
 
+<body>
+    <div class="background-container">
+        <div class="card-circle" id="cardCircle">
+            <!-- Cards will be injected here by JS -->
+        </div>
+        <div class="overlay"></div>
+    </div>
+
+    <main class="content">
+        <h1 class="title">운명의 갈림길</h1>
+        <div class="choice-container">
+            <a href="{{ url_for('main.daily_fortune') }}" class="choice-card free-choice" title="무료 운세 보기">
+                <div class="card-inner">
+                    <h2>오늘의 운세</h2>
+                    <p class="subtitle">FREE</p>
+                    <p class="description">당신의 하루를 비춰줄<br>작은 등불을 확인하세요.</p>
+                </div>
+            </a>
+            <a href="#" class="choice-card paid-choice" title="다른 운세 보기 (유료)">
+                <div class="card-inner">
+                    <h2>다른 운세 보기</h2>
+                    <p class="subtitle">PREMIUM</p>
+                    <p class="description">더 깊은 통찰과<br>미래의 조각들을 맞춰보세요.</p>
+                </div>
+            </a>
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='choice.js') }}"></script>
 </body>
+
 </html>

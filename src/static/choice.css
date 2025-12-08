@@ -1,0 +1,188 @@
+:root {
+    --bg-color: #0d0015;
+    --text-color: #e0d0f0;
+    --accent-color: #ffd700;
+    --card-bg: rgba(20, 10, 30, 0.7);
+    --hover-bg: rgba(40, 20, 60, 0.9);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Noto Serif KR', serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Background Animation Layer */
+.background-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    perspective: 1000px;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(13,0,21,0.4) 0%, rgba(13,0,21,0.95) 100%);
+    z-index: 1;
+}
+
+.card-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 600px;
+    height: 600px;
+    transform-style: preserve-3d;
+    transform: translate(-50%, -50%);
+    animation: rotateCards 60s infinite linear;
+}
+
+.tarot-bg-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 120px;
+    height: 180px;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.4;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    /* Transformation handled by JS */
+}
+
+@keyframes rotateCards {
+    from { transform: translate(-50%, -50%) rotateY(0deg); }
+    to { transform: translate(-50%, -50%) rotateY(360deg); }
+}
+
+/* Content Layer */
+.content {
+    z-index: 10;
+    text-align: center;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.title {
+    font-family: 'Cinzel', serif;
+    font-size: 3rem;
+    margin-bottom: 3rem;
+    color: var(--accent-color);
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    letter-spacing: 2px;
+}
+
+.choice-container {
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    flex-wrap: wrap;
+}
+
+.choice-card {
+    text-decoration: none;
+    color: inherit;
+    width: 300px;
+    height: 400px;
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 15px;
+    backdrop-filter: blur(5px);
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.choice-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,215,0,0.1), transparent 70%);
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.4s ease;
+}
+
+.choice-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 30px rgba(138, 43, 226, 0.3);
+    background: var(--hover-bg);
+}
+
+.choice-card:hover::before {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.card-inner {
+    position: relative;
+    z-index: 2;
+    padding: 2rem;
+}
+
+.choice-card h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.subtitle {
+    font-size: 0.9rem;
+    letter-spacing: 3px;
+    color: var(--accent-color);
+    margin-bottom: 2rem;
+    font-weight: bold;
+}
+
+.description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #b0a0c0;
+}
+
+@media (max-width: 768px) {
+    .choice-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+    }
+    
+    .card-circle {
+        width: 100vw;
+        height: 100vw;
+    }
+    
+    .choice-card {
+        width: 80%;
+        height: auto;
+        min-height: 250px;
+    }
+}

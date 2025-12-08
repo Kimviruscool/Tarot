@@ -1,0 +1,27 @@
+@import url('daily_fortune.css');
+
+.main-title,
+.title,
+.interp-title,
+.logo {
+    color: #e0ffff;
+    background: linear-gradient(to right, #ff9a9e, #fecfef, #feada6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+.tarot-card-select {
+    border-color: #fff;
+    background: linear-gradient(135deg, #222 0%, #333 100%);
+}
+
+.tarot-card-select.selected {
+    border-color: #fff;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+}
+
+.tarot-card-select::after {
+    content: 'C';
+    color: rgba(255, 255, 255, 0.2);
+}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오늘의 컬러</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='choice.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='today_color.css') }}">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Serif+KR:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-container">
+        <div class="overlay"></div>
+    </div>
+    <a href="{{ url_for('main.index') }}" class="logo">Mystic Tarot</a>
+
+    <main class="fortune-container">
+        <h1 class="title">오늘의 행운 컬러</h1>
+        <p class="description">당신에게 필요한 에너지를 줄 카드를 선택하세요.</p>
+
+        <div class="cards-grid" id="cardsGrid"></div>
+
+        <div id="resultContainer" class="result-container hidden">
+            <button id="viewResultBtn" class="result-btn">결과 보기</button>
+        </div>
+
+        <div id="revealedCards" class="revealed-cards hidden"></div>
+
+        <div id="interpretationContainer" class="interpretation-container hidden">
+            <h2 class="interp-title">행운의 컬러</h2>
+            <div id="interpText" class="interp-text"></div>
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='today_color.js') }}"></script>
+</body>
+
+</html>

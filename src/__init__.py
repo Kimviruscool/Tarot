@@ -15,7 +15,7 @@ def create_app():
 
     mysql.init_app(app)
 
-    from .view.view import bp
+    from .mvc.view.view import bp
 
     app.register_blueprint(bp)
 

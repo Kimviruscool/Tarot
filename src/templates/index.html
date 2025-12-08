@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mystic Tarot - 운명의 타로</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Serif+KR:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div id="particles"></div>
+
+    <!-- Auth Header -->
+    <header class="auth-header">
+        <a href="{{ url_for('main.login') }}" class="auth-link">로그인</a>
+        <span class="divider">|</span>
+        <a href="{{ url_for('main.signup') }}" class="auth-link">회원가입</a>
+    </header>
+
+    <main class="landing-container">
+        <div class="logo-area">
+            <h1 class="main-title">MYSTIC TAROT</h1>
+            <p class="subtitle">당신의 운명을 비추는 거울</p>
+        </div>
+
+        <!-- Free Section -->
+        <div class="section-container">
+            <h2 class="section-title">Free Services</h2>
+            <div class="dashboard-grid">
+                <!-- Today's Fortune -->
+                <a href="{{ url_for('main.daily_fortune') }}" class="menu-card">
+                    <div class="card-content">
+                        <h3>오늘의 운세</h3>
+                        <p>Daily Horoscope</p>
+                        <div class="icon">🔮</div>
+                    </div>
+                </a>
+
+                <!-- Today's Color -->
+                <a href="{{ url_for('main.today_color') }}" class="menu-card">
+                    <div class="card-content">
+                        <h3>오늘의 컬러</h3>
+                        <p>Lucky Color</p>
+                        <div class="icon">🎨</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Premium Section -->
+        <div class="section-container">
+            <h2 class="section-title">Premium Services</h2>
+            <div class="dashboard-grid">
+                <!-- Today's Love -->
+                <a href="{{ url_for('main.today_love') }}" class="menu-card premium-card">
+                    <div class="card-content">
+                        <h3>오늘의 연애운</h3>
+                        <p>Love Fortune</p>
+                        <div class="icon">❤️</div>
+                    </div>
+                </a>
+
+                <!-- Today's Wealth -->
+                <a href="{{ url_for('main.today_wealth') }}" class="menu-card premium-card">
+                    <div class="card-content">
+                        <h3>오늘의 금전운</h3>
+                        <p>Wealth Fortune</p>
+                        <div class="icon">💰</div>
+                    </div>
+                </a>
+
+                <!-- This Month's Fortune -->
+                <a href="{{ url_for('main.month_fortune') }}" class="menu-card premium-card">
+                    <div class="card-content">
+                        <h3>이번달 운세</h3>
+                        <p>Monthly Horoscope</p>
+                        <div class="icon">🌙</div>
+                    </div>
+                </a>
+
+                <!-- This Month's Love -->
+                <a href="{{ url_for('main.month_love') }}" class="menu-card premium-card">
+                    <div class="card-content">
+                        <h3>이번달 연애운</h3>
+                        <p>Monthly Love</p>
+                        <div class="icon">💘</div>
+                    </div>
+                </a>
+
+                <!-- This Month's Wealth -->
+                <a href="{{ url_for('main.month_wealth') }}" class="menu-card premium-card">
+                    <div class="card-content">
+                        <h3>이번달 금전운</h3>
+                        <p>Monthly Wealth</p>
+                        <div class="icon">💎</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
+</body>
+
+</html>

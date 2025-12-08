@@ -1,0 +1,24 @@
+@import url('daily_fortune.css');
+
+.main-title,
+.title,
+.interp-title,
+.logo {
+    color: #ffd700;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+}
+
+.tarot-card-select {
+    border-color: #daa520;
+    background: linear-gradient(135deg, #2e2b0b 0%, #3d3a1b 100%);
+}
+
+.tarot-card-select.selected {
+    border-color: #ffd700;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+}
+
+.tarot-card-select::after {
+    content: '$';
+    color: rgba(255, 215, 0, 0.2);
+}
