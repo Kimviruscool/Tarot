@@ -16,9 +16,33 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        console.log('Signup:', { name, gender, phone, email });
-        alert('회원가입이 완료되었습니다! (Demo)');
-        window.location.href = '/login';
+        const termsCheck = document.getElementById('termsCheck');
+        if (!termsCheck.checked) {
+            alert('약관에 동의해야 합니다.');
+            return;
+        }
+
+        // Send data to backend
+        fetch('/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name, gender, phone, email, termsAgreed: true }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('회원가입이 완료되었습니다!');
+                    window.location.href = '/login';
+                } else {
+                    alert('가입 실패: ' + data.message);
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('오류가 발생했습니다. 다시 시도해주세요.');
+            });
     });
 
     const kakaoBtn = document.querySelector('.kakao-btn');
@@ -34,6 +58,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
     viewTermsBtn.addEventListener('click', () => {
         modal.classList.remove('hidden');
+        // Reset scroll position and checkbox state handling
+        const termsBody = document.querySelector('.terms-body');
+        const termsCheck = document.getElementById('termsCheck');
+        const confirmBtn = document.querySelector('.modal-confirm-btn');
+
+        confirmBtn.disabled = true;
+        confirmBtn.style.opacity = '0.5';
+
+        // Check if content fits without scrolling
+        if (termsBody.scrollHeight <= termsBody.clientHeight) {
+            confirmBtn.disabled = false;
+            confirmBtn.style.opacity = '1';
+        }
+
+        termsBody.addEventListener('scroll', () => {
+            // Check if scrolled to bottom with some buffer
+            if (termsBody.scrollTop + termsBody.clientHeight >= termsBody.scrollHeight - 10) {
+                confirmBtn.disabled = false;
+                confirmBtn.style.opacity = '1';
+            }
+        });
+
+        confirmBtn.onclick = () => {
+            termsCheck.disabled = false;
+            termsCheck.checked = true;
+            modal.classList.add('hidden');
+        };
     });
 
     closeBtn.addEventListener('click', () => {
