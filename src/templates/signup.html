@@ -91,71 +91,61 @@
             border: 1px solid #555;
             width: 80%;
             max-width: 600px;
-            border-radius: 10px;
-            position: relative;
-            color: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-        }
+            < !DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>회원가입 - Mystic Tarot</title><link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">< !-- Reuse login css for consistency --><link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Serif+KR:wght@400;700&display=swap"
 
-        .modal-content h2 {
-            color: #ffd700;
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 1.8rem;
-            font-family: 'Cinzel', serif;
-        }
+            rel="stylesheet"><style>.auth-box {
+                max-width: 450px;
+            }
 
-        .terms-body {
-            max-height: 300px;
-            overflow-y: auto;
-            margin-bottom: 20px;
-            padding-right: 10px;
-            line-height: 1.6;
-            font-size: 0.95rem;
-        }
+            /* Slightly wider for signup */
+            .gender-group {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 1.5rem;
+                color: rgba(255, 255, 255, 0.7);
+            }
 
-        .terms-body p {
-            margin-bottom: 15px;
-        }
+            .gender-option {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                cursor: pointer;
+            }
 
-        .terms-body strong {
-            color: #ffd700;
-        }
+            .gender-option input {
+                accent-color: #ffd700;
+            }
 
-        .close-modal {
-            color: #aaa;
-            position: absolute;
-            top: 15px;
-            right: 25px;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+            .terms-group {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 1.5rem;
+                color: rgba(255, 255, 255, 0.7);
+                font-size: 0.9rem;
+            }
 
-        .close-modal:hover,
-        .close-modal:focus {
-            color: #ffd700;
-            text-decoration: none;
-            cursor: pointer;
-        }
+            .terms-group label {
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+            }
 
-        .modal-confirm-btn {
-            display: block;
-            width: 100%;
-            padding: 12px 20px;
-            background-color: #ffd700;
-            color: #333;
-            border: none;
-            border-radius: 5px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+            .terms-group input[type="checkbox"] {
+                margin-right: 8px;
+                accent-color: #ffd700;
+                transform: scale(1.2);
+            }
 
-        .modal-confirm-btn:hover {
-            background-color: #e6c200;
-        }
+            .view-terms-btn {
+                background: none;
+                border: none;
+                color: #ffd700;
+                cursor: pointer;
+                font-size: 0.9rem;
+                padding: 0;
+                text-decoration: underline;
+            }
     </style>
 </head>
 
@@ -223,17 +213,7 @@
         </div>
     </main>
 
-    <!-- Terms Modal -->
-    <div id="termsModal" class="modal hidden">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h2>개인정보 활용 동의서</h2>
-            <div class="terms-body">
-                <pre style="white-space: pre-wrap; font-family: inherit;">{{ terms_content }}</pre>
-            </div>
-            <button type="button" class="modal-confirm-btn">확인</button>
-        </div>
-    </div>
+    <!-- Terms Modal Removed -->
 
     <script src="{{ url_for('static', filename='signup.js') }}"></script>
 </body>

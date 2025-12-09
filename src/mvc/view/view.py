@@ -1,7 +1,6 @@
 import os
 from flask import Blueprint, render_template, send_from_directory, current_app, redirect, url_for, request, jsonify
-from src import mysql
-import MySQLdb.cursors
+from ..controller.user_controller import UserController
 
 bp = Blueprint('main', __name__, url_prefix='/')
 
@@ -54,34 +53,13 @@ def login():
 @bp.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
-        try:
-            data = request.json
-            name = data.get('name')
-            gender = data.get('gender')
-            phone = data.get('phone')
-            email = data.get('email')
-            terms_agreed = data.get('termsAgreed')
-
-            if not all([name, gender, phone, email]):
-                return jsonify({'success': False, 'message': '모든 필드를 입력해주세요.'}), 400
-            
-            if not terms_agreed:
-                return jsonify({'success': False, 'message': '약관에 동의해야 합니다.'}), 400
-
-            cur = mysql.connection.cursor()
-            cur.execute("INSERT INTO users (userName, userGender, userPhone, userEmail, termsAgreed) VALUES (%s, %s, %s, %s, %s)", 
-                        (name, gender, phone, email, True))
-            mysql.connection.commit()
-            cur.close()
-
-            return jsonify({'success': True, 'message': '회원가입이 완료되었습니다.'}), 200
-
-        except Exception as e:
-            if 'Duplicate entry' in str(e):
-                return jsonify({'success': False, 'message': '이미 존재하는 전화번호나 이메일입니다.'}), 409
-            return jsonify({'success': False, 'message': str(e)}), 500
+        result = UserController.signup(request.json)
+        return jsonify({'success': result['success'], 'message': result['message']}), result['code']
     
-    # GET request: Read terms file
+    return render_template('signup.html')
+
+@bp.route('/terms')
+def terms():
     terms_content = ""
     try:
         # Assuming the file is in the root directory 'Tarot' which is the parent of 'src'
@@ -91,5 +69,4 @@ def signup():
             terms_content = f.read()
     except Exception as e:
         terms_content = "약관을 불러올 수 없습니다. 관리자에게 문의하세요."
-
-    return render_template('signup.html', terms_content=terms_content)
+    return render_template('terms.html', terms_content=terms_content)

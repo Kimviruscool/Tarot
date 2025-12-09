@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이용약관 동의</title>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #ddd;
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            box-sizing: border-box;
+        }
+
+        h2 {
+            color: #ffd700;
+            text-align: center;
+            margin-top: 0;
+        }
+
+        .terms-container {
+            flex-grow: 1;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #555;
+            border-radius: 5px;
+            padding: 15px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+            white-space: pre-wrap;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .actions {
+            text-align: center;
+        }
+
+        button {
+            padding: 12px 30px;
+            background-color: #ffd700;
+            color: #333;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background-color: #555;
+            color: #888;
+        }
+
+        button:not(:disabled):hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>개인정보 활용 동의서</h2>
+    <div class="terms-container" id="termsContainer">
+        {{ terms_content }}
+    </div>
+    <div class="actions">
+        <button id="agreeBtn" disabled>동의하기</button>
+    </div>
+
+    <script>
+        const termsContainer = document.getElementById('termsContainer');
+        const agreeBtn = document.getElementById('agreeBtn');
+
+        // Check if content fits without scrolling
+        if (termsContainer.scrollHeight <= termsContainer.clientHeight) {
+            agreeBtn.disabled = false;
+        }
+
+        termsContainer.addEventListener('scroll', () => {
+            // Check if scrolled to bottom with some buffer
+            if (termsContainer.scrollTop + termsContainer.clientHeight >= termsContainer.scrollHeight - 10) {
+                agreeBtn.disabled = false;
+            }
+        });
+
+        agreeBtn.addEventListener('click', () => {
+            if (window.opener && !window.opener.closed) {
+                window.opener.postMessage('termsAgreed', '*');
+                window.close();
+            } else {
+                alert('부모 창을 찾을 수 없습니다.');
+            }
+        });
+    </script>
+</body>
+
+</html>

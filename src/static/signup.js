@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', () => {
     const signupForm = document.getElementById('signupForm');
 
@@ -47,57 +48,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const kakaoBtn = document.querySelector('.kakao-btn');
     kakaoBtn.addEventListener('click', () => {
-        alert('카카오 회원가입 API 연동 준비 중입니다.');
     });
 
-    // Terms Modal Logic
-    const modal = document.getElementById('termsModal');
+    // Terms Popup Logic
     const viewTermsBtn = document.querySelector('.view-terms-btn');
-    const closeBtn = document.querySelector('.close-modal');
-    const confirmBtn = document.querySelector('.modal-confirm-btn');
+    const termsCheck = document.getElementById('termsCheck');
 
     viewTermsBtn.addEventListener('click', () => {
-        modal.classList.remove('hidden');
-        // Reset scroll position and checkbox state handling
-        const termsBody = document.querySelector('.terms-body');
-        const termsCheck = document.getElementById('termsCheck');
-        const confirmBtn = document.querySelector('.modal-confirm-btn');
+        // Open popup window
+        const width = 600;
+        const height = 800;
+        const left = (window.screen.width / 2) - (width / 2);
+        const top = (window.screen.height / 2) - (height / 2);
 
-        confirmBtn.disabled = true;
-        confirmBtn.style.opacity = '0.5';
+        window.open('/terms', 'TermsWindow', `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes`);
+    });
 
-        // Check if content fits without scrolling
-        if (termsBody.scrollHeight <= termsBody.clientHeight) {
-            confirmBtn.disabled = false;
-            confirmBtn.style.opacity = '1';
-        }
-
-        termsBody.addEventListener('scroll', () => {
-            // Check if scrolled to bottom with some buffer
-            if (termsBody.scrollTop + termsBody.clientHeight >= termsBody.scrollHeight - 10) {
-                confirmBtn.disabled = false;
-                confirmBtn.style.opacity = '1';
-            }
-        });
-
-        confirmBtn.onclick = () => {
+    // Listen for message from popup
+    window.addEventListener('message', (event) => {
+        if (event.data === 'termsAgreed') {
             termsCheck.disabled = false;
             termsCheck.checked = true;
-            modal.classList.add('hidden');
-        };
-    });
-
-    closeBtn.addEventListener('click', () => {
-        modal.classList.add('hidden');
-    });
-
-    confirmBtn.addEventListener('click', () => {
-        modal.classList.add('hidden');
-    });
-
-    window.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.classList.add('hidden');
         }
     });
 
