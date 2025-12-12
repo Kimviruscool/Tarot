@@ -15,7 +15,7 @@ def home():
 @bp.route('/cards/<path:filename>')
 def cards(filename):
     # 'src' is the root_path of the app. 'card' is in the parent of 'src'.
-    card_dir = os.path.join(os.path.dirname(current_app.root_path), 'card')
+    card_dir = os.path.join(os.path.dirname(current_app.root_path), 'cards')
     return send_from_directory(card_dir, filename)
 
 @bp.route('/daily_fortune')

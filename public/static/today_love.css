@@ -1,0 +1,34 @@
+/* Inherit Daily Fortune Styles but tweak colors */
+@import url('daily_fortune.css');
+
+.main-title,
+.title,
+.interp-title,
+.logo {
+    color: #ffb7c5;
+    /* Pinkish for Love */
+    text-shadow: 0 0 20px rgba(255, 183, 197, 0.4);
+}
+
+.tarot-card-select {
+    border-color: #ffb7c5;
+    background: linear-gradient(135deg, #2e0b1a 0%, #3d1b2a 100%);
+}
+
+.tarot-card-select.selected {
+    border-color: #ff69b4;
+    box-shadow: 0 0 20px rgba(255, 105, 180, 0.6);
+}
+
+.tarot-card-select::after {
+    content: '♥';
+    color: rgba(255, 183, 197, 0.2);
+}
+
+.interpretation-container {
+    border-color: rgba(255, 183, 197, 0.3);
+}
+
+.interp-title {
+    border-bottom-color: rgba(255, 183, 197, 0.2);
+}

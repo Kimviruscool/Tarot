@@ -1,0 +1,25 @@
+@import url('daily_fortune.css');
+
+/* Monthly fortune - maybe cooler colors */
+.main-title,
+.title,
+.interp-title,
+.logo {
+    color: #add8e6;
+    text-shadow: 0 0 20px rgba(173, 216, 230, 0.4);
+}
+
+.tarot-card-select {
+    border-color: #87ceeb;
+    background: linear-gradient(135deg, #0b1a2e 0%, #1b2a3d 100%);
+}
+
+.tarot-card-select.selected {
+    border-color: #00bfff;
+    box-shadow: 0 0 20px rgba(0, 191, 255, 0.6);
+}
+
+.tarot-card-select::after {
+    content: 'M';
+    color: rgba(173, 216, 230, 0.2);
+}

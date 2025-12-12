@@ -1,21 +1,14 @@
 from flask import Flask
-import os
-from .mvc.model import db
+
 
 def create_app():
     app = Flask(__name__)
 
-    # Configuration can be moved to a config file
+    # 시크릿 키 설정
     app.config['SECRET_KEY'] = 'dev'
-    app.config['DATABASE'] = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'DB', 'tarot.db')
 
-    # Initialize Database
-    db.init_app(app)
-
-    # Ensure DB exists and tables are created (optional auto-init for dev convenience)
-    with app.app_context():
-        if not os.path.exists(app.config['DATABASE']):
-            db.init_db()
+    # [수정됨] 여기에 있던 db.init_app(app), db.init_db() 코드를 모두 지웠습니다.
+    # 이제 Firestore를 사용하므로 파일 DB 설정은 필요 없습니다.
 
     from .mvc.view.view import bp
     app.register_blueprint(bp)

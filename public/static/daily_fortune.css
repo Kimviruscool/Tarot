@@ -1,0 +1,270 @@
+.fortune-container {
+    max-width: 1000px;
+    width: 90%;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+    text-align: center;
+}
+
+/* Card Grid - Restored */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 15px;
+    margin: 2rem 0;
+    padding: 1rem;
+    perspective: 1000px;
+}
+
+.tarot-card-select {
+    width: 100%;
+    aspect-ratio: 2/3;
+    background: linear-gradient(135deg, #1a0b2e 0%, #2a1b3d 100%);
+    border: 2px solid #3a2b4d;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.tarot-card-select::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    border: 1px dashed rgba(255, 215, 0, 0.3);
+    border-radius: 4px;
+}
+
+.tarot-card-select::after {
+    content: '★';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: rgba(255, 215, 0, 0.2);
+    font-size: 2rem;
+}
+
+.tarot-card-select:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(138, 43, 226, 0.2);
+    border-color: #9b4dca;
+}
+
+.tarot-card-select.selected {
+    transform: translateY(-15px);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+    border-color: #ffd700;
+    background: linear-gradient(135deg, #3a2b4d 0%, #4a3b5d 100%);
+}
+
+.tarot-card-select.selected::after {
+    color: rgba(255, 215, 0, 0.8);
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+/* Result Section */
+.result-container {
+    height: 60px;
+    margin-top: 2rem;
+    transition: all 0.5s ease;
+}
+
+.result-container.hidden {
+    opacity: 0;
+    pointer-events: none;
+    display: none;
+}
+
+.result-btn {
+    padding: 1rem 3rem;
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    color: #0d0015;
+    background: #ffd700;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+    font-weight: bold;
+    animation: pulseBtn 2s infinite;
+}
+
+.result-btn:hover {
+    transform: scale(1.05);
+    background: #ffe066;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+}
+
+@keyframes pulseBtn {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 15px rgba(255, 215, 0, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
+    }
+}
+
+/* Revealed Cards Flip Animation */
+.revealed-cards {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+    perspective: 1000px;
+    /* Essential for 3D flip */
+}
+
+.revealed-cards.hidden {
+    display: none;
+}
+
+.flip-card {
+    background-color: transparent;
+    width: 200px;
+    height: 320px;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.flip-card.flipped .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    border: 2px solid #ffd700;
+}
+
+/* Front is the "Back" of the tarot card initially shown */
+.flip-card-front {
+    background: linear-gradient(135deg, #1a0b2e 0%, #2a1b3d 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flip-card-front::after {
+    content: '?';
+    font-size: 3rem;
+    color: rgba(255, 215, 0, 0.3);
+}
+
+/* Back is the actual Image */
+.flip-card-back {
+    background-color: #0d0015;
+    transform: rotateY(180deg);
+    background-size: 100% 100%;
+    /* Full image visible */
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Interpretation Container */
+.interpretation-container {
+    background: rgba(13, 0, 21, 0.6);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 10px;
+    padding: 2rem;
+    margin-top: 2rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    backdrop-filter: blur(5px);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+}
+
+.interpretation-container.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.interpretation-container.hidden {
+    display: none;
+}
+
+.interp-title {
+    font-family: 'Cinzel', serif;
+    color: #ffd700;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+    padding-bottom: 0.5rem;
+    display: inline-block;
+}
+
+.interp-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #e0d0f0;
+    text-align: left;
+    white-space: pre-line;
+}
+
+.back-btn {
+    display: inline-block;
+    margin-top: 2rem;
+    color: #b0a0c0;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.back-btn:hover {
+    color: #ffd700;
+}
+
+#retryContainer.hidden {
+    display: none;
+}
+
+/* Logo Styling */
+.logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    color: #ffd700;
+    text-decoration: none;
+    z-index: 100;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+.logo:hover {
+    color: #fff;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+    transform: scale(1.05);
+}
