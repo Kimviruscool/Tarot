@@ -1,54 +1,113 @@
-/* 헤더 전체 레이아웃 */
+/* Global Variables (duplicated from index.css for consistency across pages) */
+:root {
+    --header-bg-color: #0d0015;
+    --header-text-primary: #e0d0f0;
+    --header-accent-gold: #ffd700;
+    --header-glass-bg: rgba(13, 0, 21, 0.7);
+    --header-glass-border: rgba(255, 215, 0, 0.2);
+}
+
+/* Header Container */
 .common-header {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    padding: 20px;
+    height: 80px; /* Fixed height */
+    padding: 0 40px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Logo left, Auth right */
     align-items: center;
-    z-index: 1000;
+    z-index: 9999; /* Highest priority */
     box-sizing: border-box;
+    
+    /* Glassmorphism */
+    background: var(--header-glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--header-glass-border);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
 }
 
-/* 로고 스타일 */
+/* Logo Style */
 .logo {
     font-family: 'Cinzel', serif;
-    font-size: 1.5rem;
-    color: #ffd700;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--header-accent-gold);
     text-decoration: none;
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-    transition: transform 0.3s ease;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
 }
 
 .logo:hover {
     transform: scale(1.05);
-    text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
 }
 
-/* 링크 및 텍스트 스타일 */
+/* Auth Menu & Links */
+.auth-menu {
+    display: flex;
+    align-items: center;
+    font-family: 'Noto Serif KR', serif;
+}
+
 .auth-link {
-    color: #ffd700;
+    color: var(--header-text-primary);
     text-decoration: none;
-    margin-left: 10px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: color 0.3s ease;
+    font-size: 1rem;
+    margin: 0 15px;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 5px 0;
+}
+
+.auth-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--header-accent-gold);
+    transition: width 0.3s ease;
 }
 
 .auth-link:hover {
-    color: #fff;
-    text-shadow: 0 0 5px #ffd700;
+    color: var(--header-accent-gold);
+}
+
+.auth-link:hover::after {
+    width: 100%;
 }
 
 .divider {
-    color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 215, 0, 0.3);
     margin: 0 5px;
+    font-size: 0.8rem;
 }
 
 .user-name {
-    color: #ffd700;
-    margin-right: 15px;
-    font-weight: bold;
+    color: var(--header-accent-gold);
+    margin-right: 20px;
+    font-weight: 700;
+    font-family: 'Cinzel', serif;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .common-header {
+        padding: 0 20px;
+        height: 60px;
+    }
+
+    .logo {
+        font-size: 1.4rem;
+    }
+
+    .auth-link {
+        font-size: 0.9rem;
+        margin: 0 8px;
+    }
 }

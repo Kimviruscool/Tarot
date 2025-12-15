@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='header.css') }}">
+
 <header class="common-header" id="mainHeader" data-home-url="{{ url_for('main.index') }}">
     <a href="{{ url_for('main.index') }}" class="logo">Mystic Tarot</a>
 
@@ -14,3 +16,5 @@
         </div>
     </div>
 </header>
+
+<script src="{{ url_for('static', filename='header.js') }}"></script>

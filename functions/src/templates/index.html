@@ -14,12 +14,9 @@
 <body>
     <div id="particles"></div>
 
-    <!-- Auth Header -->
-    <header class="auth-header">
-        <a href="{{ url_for('main.login') }}" class="auth-link">로그인</a>
-        <span class="divider">|</span>
-        <a href="{{ url_for('main.signup') }}" class="auth-link">회원가입</a>
-    </header>
+    <div id="particles"></div>
+
+    {% include 'header.html' %}
 
     <main class="landing-container">
         <div class="logo-area">
