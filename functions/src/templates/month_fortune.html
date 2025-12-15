@@ -1,22 +1,16 @@
-<!DOCTYPE html>
-<html lang="ko">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>이번달 운세</title>
+{% block title %}이번달 운세{% endblock %}
+
+{% block head_css %}
     <link rel="stylesheet" href="{{ url_for('static', filename='choice.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='month_fortune.css') }}">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Serif+KR:wght@400;700&display=swap"
-        rel="stylesheet">
-</head>
+{% endblock %}
 
-<body>
+{% block content %}
     <div class="background-container">
         <div class="overlay"></div>
     </div>
-    {% include 'header.html' %}
 
     <main class="fortune-container">
         <h1 class="title">이번달 운세</h1>
@@ -35,8 +29,8 @@
             <div id="interpText" class="interp-text"></div>
         </div>
     </main>
+{% endblock %}
 
+{% block body_js %}
     <script src="{{ url_for('static', filename='month_fortune.js') }}"></script>
-</body>
-
-</html>
+{% endblock %}

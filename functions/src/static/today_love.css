@@ -4,11 +4,6 @@
 .main-title,
 .title,
 .interp-title,
-.logo {
-    color: #ffb7c5;
-    /* Pinkish for Love */
-    text-shadow: 0 0 20px rgba(255, 183, 197, 0.4);
-}
 
 .tarot-card-select {
     border-color: #ffb7c5;

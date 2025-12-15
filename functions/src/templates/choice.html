@@ -1,25 +1,16 @@
-<!DOCTYPE html>
-<html lang="ko">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>타로 운세 선택</title>
+{% block title %}타로 운세 선택{% endblock %}
+
+{% block head_css %}
     <link rel="stylesheet" href="{{ url_for('static', filename='choice.css') }}">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Serif+KR:wght@400;700&display=swap"
-        rel="stylesheet">
-</head>
+{% endblock %}
 
-<body>
+{% block content %}
     <div class="background-container">
-        <div class="card-circle" id="cardCircle">
-            <!-- Cards will be injected here by JS -->
-        </div>
+        <div class="card-circle" id="cardCircle"></div>
         <div class="overlay"></div>
     </div>
-
-    {% include 'header.html' %}
 
     <main class="content">
         <h1 class="title">운명의 갈림길</h1>
@@ -40,8 +31,29 @@
             </a>
         </div>
     </main>
+{% endblock %}
 
+{% block body_js %}
     <script src="{{ url_for('static', filename='choice.js') }}"></script>
-</body>
+    <script>
+        // 토스 결제 스크립트
+        const clientKey = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq'; // 본인 키 확인 필요
+        const tossPayments = TossPayments(clientKey);
+        const payBtn = document.querySelector('.paid-choice');
 
-</html>
+        if (payBtn) {
+            payBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                // 결제창 호출
+                tossPayments.requestPayment('카드', {
+                    amount: 3000,
+                    orderId: 'ORDER_' + new Date().getTime(),
+                    orderName: '프리미엄 타로 운세',
+                    customerName: '익명',
+                    successUrl: window.location.origin + '/payment/success',
+                    failUrl: window.location.origin + '/payment/fail',
+                });
+            });
+        }
+    </script>
+{% endblock %}

@@ -1,29 +1,15 @@
-<!DOCTYPE html>
-<html lang="ko">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>로그인 - Mystic Tarot</title>
+{% block title %}로그인 - Mystic Tarot{% endblock %}
+
+{% block head_css %}
     <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Serif+KR:wght@400;700&display=swap"
-        rel="stylesheet">
-    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.0/kakao.min.js"
-        integrity="sha384-l+xbElFSnP5W7zGCzKgODqn796kdXhUVvBCKuMws+syU6TChqktm05q59XS4COh9"
-        crossorigin="anonymous"></script>
-</head>
+{% endblock %}
 
-<body>
+{% block content %}
     <div class="background-container">
         <div class="overlay"></div>
     </div>
-
-    <div class="background-container">
-        <div class="overlay"></div>
-    </div>
-
-    {% include 'header.html' %}
 
     <main class="auth-container">
         <div class="auth-box">
@@ -36,13 +22,10 @@
                 <div class="input-group">
                     <input type="password" id="password" placeholder="비밀번호" required>
                 </div>
-
                 <button type="submit" class="auth-btn">로그인</button>
             </form>
 
-            <div class="divider">
-                <span>OR</span>
-            </div>
+            <div class="divider"><span>OR</span></div>
 
             <button type="button" class="kakao-btn">
                 <span class="kakao-icon">💬</span> 카카오계정으로 로그인
@@ -55,8 +38,8 @@
             </div>
         </div>
     </main>
+{% endblock %}
 
+{% block body_js %}
     <script src="{{ url_for('static', filename='login.js') }}"></script>
-</body>
-
-</html>
+{% endblock %}

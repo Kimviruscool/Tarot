@@ -3,10 +3,7 @@
 .main-title,
 .title,
 .interp-title,
-.logo {
-    color: #ffd700;
-    text-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
-}
+
 
 .tarot-card-select {
     border-color: #daa520;
