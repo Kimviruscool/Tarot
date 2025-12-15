@@ -1,0 +1,16 @@
+<header class="common-header" id="mainHeader" data-home-url="{{ url_for('main.index') }}">
+    <a href="{{ url_for('main.index') }}" class="logo">Mystic Tarot</a>
+
+    <div class="auth-menu">
+        <div id="guest-menu">
+            <a href="{{ url_for('main.login') }}" class="auth-link">로그인</a>
+            <span class="divider">|</span>
+            <a href="{{ url_for('main.signup') }}" class="auth-link">회원가입</a>
+        </div>
+
+        <div id="user-menu" style="display: none;">
+            <span id="user-name-display" class="user-name"></span>
+            <a href="#" id="logout-btn" class="auth-link">로그아웃</a>
+        </div>
+    </div>
+</header>

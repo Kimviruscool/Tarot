@@ -1,0 +1,54 @@
+/* 헤더 전체 레이아웃 */
+.common-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    box-sizing: border-box;
+}
+
+/* 로고 스타일 */
+.logo {
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    color: #ffd700;
+    text-decoration: none;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+}
+
+/* 링크 및 텍스트 스타일 */
+.auth-link {
+    color: #ffd700;
+    text-decoration: none;
+    margin-left: 10px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.auth-link:hover {
+    color: #fff;
+    text-shadow: 0 0 5px #ffd700;
+}
+
+.divider {
+    color: rgba(255, 255, 255, 0.3);
+    margin: 0 5px;
+}
+
+.user-name {
+    color: #ffd700;
+    margin-right: 15px;
+    font-weight: bold;
+}

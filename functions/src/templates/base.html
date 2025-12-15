@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Mystic Tarot{% endblock %}</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='header.css') }}">
+
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.0/kakao.min.js" integrity="sha384-l+xbElFSnP5W7zGCzKgODqn796kdXhUVvBCKuMws+syU6TChqktm05q59XS4COh9" crossorigin="anonymous"></script>
+    <script src="https://js.tosspayments.com/v1/payment"></script>
+
+    {% block head_css %}{% endblock %}
+</head>
+<body>
+
+    {% include 'includes/header.html' %}
+
+    {% block content %}{% endblock %}
+
+    <script src="{{ url_for('static', filename='header.js') }}"></script>
+
+    {% block body_js %}{% endblock %}
+</body>
+</html>
