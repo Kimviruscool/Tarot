@@ -17,16 +17,7 @@ body {
     z-index: -1;
 }
 
-.logo {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    font-family: 'Cinzel', serif;
-    font-size: 1.5rem;
-    color: #ffd700;
-    text-decoration: none;
-    z-index: 100;
-}
+
 
 .auth-container {
     display: flex;

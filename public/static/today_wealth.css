@@ -1,11 +1,11 @@
 @import url('daily_fortune.css');
 
+/* Title colors */
 .main-title,
 .title,
-.interp-title,
-.logo {
+.interp-title {
     color: #ffd700;
-    text-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+    border-color: #daa520;
 }
 
 .tarot-card-select {

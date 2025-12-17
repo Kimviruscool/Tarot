@@ -1,12 +1,12 @@
 @import url('daily_fortune.css');
 
 /* Monthly fortune - maybe cooler colors */
+/* Title colors */
 .main-title,
 .title,
-.interp-title,
-.logo {
-    color: #add8e6;
-    text-shadow: 0 0 20px rgba(173, 216, 230, 0.4);
+.interp-title {
+    color: #87ceeb;
+    border-color: #87ceeb;
 }
 
 .tarot-card-select {

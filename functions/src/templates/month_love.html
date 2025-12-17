@@ -1,36 +1,42 @@
 {% extends "base.html" %}
 
+{% block header_area %}
+{% with hide_auth_menu=True %}
+{% include 'header.html' %}
+{% endwith %}
+{% endblock %}
+
 {% block title %}이번달 연애운{% endblock %}
 
 {% block head_css %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='choice.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='month_love.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='choice.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='month_love.css') }}">
 {% endblock %}
 
 {% block content %}
-    <div class="background-container">
-        <div class="overlay"></div>
+<div class="background-container">
+    <div class="overlay"></div>
+</div>
+
+<main class="fortune-container">
+    <h1 class="title">이번달 연애운</h1>
+    <p class="description">이번 달, 당신의 사랑은 어떨까요? 3장을 선택해주세요.</p>
+
+    <div class="cards-grid" id="cardsGrid"></div>
+
+    <div id="resultContainer" class="result-container hidden">
+        <button id="viewResultBtn" class="result-btn">결과 보기</button>
     </div>
 
-    <main class="fortune-container">
-        <h1 class="title">이번달 연애운</h1>
-        <p class="description">이번 달, 당신의 사랑은 어떨까요? 3장을 선택해주세요.</p>
+    <div id="revealedCards" class="revealed-cards hidden"></div>
 
-        <div class="cards-grid" id="cardsGrid"></div>
-
-        <div id="resultContainer" class="result-container hidden">
-            <button id="viewResultBtn" class="result-btn">결과 보기</button>
-        </div>
-
-        <div id="revealedCards" class="revealed-cards hidden"></div>
-
-        <div id="interpretationContainer" class="interpretation-container hidden">
-            <h2 class="interp-title">이달의 사랑</h2>
-            <div id="interpText" class="interp-text"></div>
-        </div>
-    </main>
+    <div id="interpretationContainer" class="interpretation-container hidden">
+        <h2 class="interp-title">이달의 사랑</h2>
+        <div id="interpText" class="interp-text"></div>
+    </div>
+</main>
 {% endblock %}
 
 {% block body_js %}
-    <script src="{{ url_for('static', filename='month_love.js') }}"></script>
+<script src="{{ url_for('static', filename='month_love.js') }}"></script>
 {% endblock %}

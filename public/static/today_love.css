@@ -1,13 +1,12 @@
 /* Inherit Daily Fortune Styles but tweak colors */
 @import url('daily_fortune.css');
 
+/* Title colors */
 .main-title,
 .title,
-.interp-title,
-.logo {
+.interp-title {
     color: #ffb7c5;
-    /* Pinkish for Love */
-    text-shadow: 0 0 20px rgba(255, 183, 197, 0.4);
+    border-color: #ffb7c5;
 }
 
 .tarot-card-select {
