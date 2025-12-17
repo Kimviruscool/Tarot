@@ -78,3 +78,26 @@ document.addEventListener('DOMContentLoaded', () => {
         return re.test(phone);
     }
 });
+
+// ... 기존 코드 아래에 추가 ...
+
+// [수정됨] 약관 팝업창 띄우기
+const termsBtn = document.querySelector('.view-terms-btn');
+if (termsBtn) {
+    termsBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        // 팝업창 크기와 위치 계산 (화면 정중앙)
+        const width = 600;
+        const height = 700;
+        const left = (window.screen.width - width) / 2;
+        const top = (window.screen.height - height) / 2;
+
+        // window.open으로 팝업 띄우기
+        window.open(
+            '/terms',
+            'TermsWindow',
+            `width=${width},height=${height},top=${top},left=${left},scrollbars=yes,resizable=yes`
+        );
+    });
+}
