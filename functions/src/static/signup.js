@@ -51,7 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Terms Popup Logic
-    const viewTermsBtn = document.querySelector('.view-terms-btn');
     const termsCheck = document.getElementById('termsCheck');
 
     viewTermsBtn.addEventListener('click', () => {
