@@ -1,105 +1,65 @@
-<!DOCTYPE html>
-<html lang="ko">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>이용약관 동의</title>
+{% block title %}이용약관 - Mystic Tarot{% endblock %}
+
+{% block head_css %}
     <style>
-        body {
-            background-color: #1a1a1a;
-            color: #ddd;
-            font-family: 'Noto Sans KR', sans-serif;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            box-sizing: border-box;
-        }
-
-        h2 {
-            color: #ffd700;
-            text-align: center;
-            margin-top: 0;
-        }
-
+        /* 약관 페이지 전용 간단 스타일 */
         .terms-container {
-            flex-grow: 1;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid #555;
-            border-radius: 5px;
-            padding: 15px;
-            overflow-y: auto;
-            margin-bottom: 15px;
-            white-space: pre-wrap;
-            font-size: 0.95rem;
+            max-width: 800px;
+            margin: 100px auto 50px; /* 헤더 공간 확보 */
+            padding: 2rem;
+            background: rgba(13, 0, 21, 0.8);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 10px;
+            color: #e0d0f0;
             line-height: 1.6;
         }
-
-        .actions {
+        .terms-container h1 {
+            font-family: 'Cinzel', serif;
+            color: #ffd700;
             text-align: center;
+            margin-bottom: 2rem;
         }
-
-        button {
-            padding: 12px 30px;
-            background-color: #ffd700;
-            color: #333;
-            border: none;
+        .terms-content {
+            white-space: pre-line; /* 줄바꿈 보존 */
+            font-size: 0.95rem;
+        }
+        .close-btn {
+            display: block;
+            width: 100px;
+            margin: 2rem auto 0;
+            padding: 10px;
+            background: #ffd700;
+            color: #0d0015;
+            text-align: center;
             border-radius: 5px;
-            font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
-            transition: opacity 0.3s;
         }
-
-        button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            background-color: #555;
-            color: #888;
-        }
-
-        button:not(:disabled):hover {
-            opacity: 0.9;
-        }
+        .close-btn:hover { background: #ffe066; }
     </style>
-</head>
+{% endblock %}
 
-<body>
-    <h2>개인정보 활용 동의서</h2>
-    <div class="terms-container" id="termsContainer">
-        {{ terms_content }}
-    </div>
-    <div class="actions">
-        <button id="agreeBtn" disabled>동의하기</button>
+{% block content %}
+    <div class="background-container">
+        <div class="overlay"></div>
     </div>
 
-    <script>
-        const termsContainer = document.getElementById('termsContainer');
-        const agreeBtn = document.getElementById('agreeBtn');
+    <main class="terms-container">
+        <h1>이용약관</h1>
+        <div class="terms-content">
+            제1조 (목적)
+            본 약관은 Mystic Tarot(이하 "서비스")이 제공하는 타로 운세 서비스의 이용 조건 및 절차를 규정합니다.
 
-        // Check if content fits without scrolling
-        if (termsContainer.scrollHeight <= termsContainer.clientHeight) {
-            agreeBtn.disabled = false;
-        }
+            제2조 (개인정보 수집)
+            서비스 이용 시 수집되는 이름, 이메일 등의 정보는 서비스 제공 목적 외에는 사용되지 않습니다.
 
-        termsContainer.addEventListener('scroll', () => {
-            // Check if scrolled to bottom with some buffer
-            if (termsContainer.scrollTop + termsContainer.clientHeight >= termsContainer.scrollHeight - 10) {
-                agreeBtn.disabled = false;
-            }
-        });
+            제3조 (서비스 이용)
+            본 서비스는 무료 및 유료 운세 콘텐츠를 제공하며, 유료 결제 시 포인트가 차감됩니다.
 
-        agreeBtn.addEventListener('click', () => {
-            if (window.opener && !window.opener.closed) {
-                window.opener.postMessage('termsAgreed', '*');
-                window.close();
-            } else {
-                alert('부모 창을 찾을 수 없습니다.');
-            }
-        });
-    </script>
-</body>
-
-</html>
+            (기타 세부 내용은 운영 정책에 따릅니다.)
+        </div>
+        <a href="javascript:history.back()" class="close-btn">돌아가기</a>
+    </main>
+{% endblock %}
