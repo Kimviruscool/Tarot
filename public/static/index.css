@@ -27,33 +27,6 @@ body {
     pointer-events: none;
 }
 
-/* Auth Header */
-.auth-header {
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    z-index: 100;
-    font-family: 'Cinzel', serif;
-}
-
-.auth-link {
-    color: var(--accent-gold);
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-    padding: 5px 10px;
-}
-
-.auth-link:hover {
-    color: #fff;
-    text-shadow: 0 0 10px var(--accent-gold);
-}
-
-.divider {
-    color: rgba(255, 215, 0, 0.5);
-    margin: 0 5px;
-}
-
 /* Main Container */
 .landing-container {
     position: relative;
@@ -112,8 +85,7 @@ body {
 .dashboard-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(2, 180px);
-    /* Fixed height rows */
+    grid-template-rows: auto;
     gap: 20px;
     max-width: 1200px;
     width: 100%;

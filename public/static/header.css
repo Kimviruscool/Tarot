@@ -49,54 +49,7 @@
     text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
 }
 
-/* Auth Menu & Links */
-.auth-menu {
-    display: flex;
-    align-items: center;
-    font-family: 'Noto Serif KR', serif;
-}
 
-.auth-link {
-    color: var(--header-text-primary);
-    text-decoration: none;
-    font-size: 1rem;
-    margin: 0 15px;
-    transition: all 0.3s ease;
-    position: relative;
-    padding: 5px 0;
-}
-
-.auth-link::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: 0;
-    left: 0;
-    background-color: var(--header-accent-gold);
-    transition: width 0.3s ease;
-}
-
-.auth-link:hover {
-    color: var(--header-accent-gold);
-}
-
-.auth-link:hover::after {
-    width: 100%;
-}
-
-.divider {
-    color: rgba(255, 215, 0, 0.3);
-    margin: 0 5px;
-    font-size: 0.8rem;
-}
-
-.user-name {
-    color: var(--header-accent-gold);
-    margin-right: 20px;
-    font-weight: 700;
-    font-family: 'Cinzel', serif;
-}
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
