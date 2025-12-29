@@ -1,42 +1,48 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="ko">
 
-{% block header_area %}
-{% with hide_auth_menu=True %}
-{% include 'header.html' %}
-{% endwith %}
-{% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오늘의 연애운</title>
+    <link rel="stylesheet" href="static/choice.css">
+    <link rel="stylesheet" href="static/header.css">
+    <link rel="stylesheet" href="static/today_love.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Serif+KR:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="static/index.css">
+</head>
 
-{% block title %}오늘의 연애운{% endblock %}
+<body>
+    <header class="common-header" id="mainHeader">
+        <a href="index.html" class="logo">Mystic Tarot</a>
+    </header>
 
-{% block head_css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='choice.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='today_love.css') }}">
-{% endblock %}
-
-{% block content %}
-<div class="background-container">
-    <div class="overlay"></div>
-</div>
-
-<main class="fortune-container">
-    <h1 class="title">오늘의 연애운</h1>
-    <p class="description">당신의 사랑을 비춰줄 카드 3장을 선택해주세요.</p>
-
-    <div class="cards-grid" id="cardsGrid"></div>
-
-    <div id="resultContainer" class="result-container hidden">
-        <button id="viewResultBtn" class="result-btn">결과 보기</button>
+    <div class="background-container">
+        <div class="overlay"></div>
     </div>
 
-    <div id="revealedCards" class="revealed-cards hidden"></div>
+    <main class="fortune-container">
+        <h1 class="title">오늘의 연애운</h1>
+        <p class="description">당신의 사랑을 비춰줄 카드 1장을 선택해주세요.</p>
 
-    <div id="interpretationContainer" class="interpretation-container hidden">
-        <h2 class="interp-title">사랑의 메시지</h2>
-        <div id="interpText" class="interp-text"></div>
-    </div>
-</main>
-{% endblock %}
+        <div class="cards-grid" id="cardsGrid"></div>
 
-{% block body_js %}
-<script src="{{ url_for('static', filename='today_love.js') }}"></script>
-{% endblock %}
+        <div id="resultContainer" class="result-container hidden">
+            <button id="viewResultBtn" class="result-btn">결과 보기</button>
+        </div>
+
+        <div id="revealedCards" class="revealed-cards hidden"></div>
+
+        <div id="interpretationContainer" class="interpretation-container hidden">
+            <h2 class="interp-title">사랑의 메시지</h2>
+            <div id="interpText" class="interp-text"></div>
+        </div>
+    </main>
+
+    <script src="static/today_love.js"></script>
+
+</body>
+
+</html>

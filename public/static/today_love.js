@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const totalCards = 22;
     const selectedCards = new Set();
-    const MAX_SELECTION = 3;
+    const MAX_SELECTION = 1;
 
     for (let i = 0; i < totalCards; i++) {
         const card = document.createElement('div');
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
             card.classList.remove('selected');
         } else {
             if (selectedCards.size >= MAX_SELECTION) {
-                alert('3장까지만 선택할 수 있습니다.');
+                alert('1장까지만 선택할 수 있습니다.');
                 return;
             }
             selectedCards.add(index);
@@ -48,11 +48,11 @@ document.addEventListener('DOMContentLoaded', () => {
         cardsGrid.style.display = 'none';
         resultContainer.classList.add('hidden');
         titleObj.textContent = "사랑의 확인";
-        descObj.textContent = "카드 3장이 당신의 사랑을 이야기합니다...";
+        descObj.textContent = "카드 1장이 당신의 사랑을 이야기합니다...";
         revealedCardsContainer.classList.remove('hidden');
         revealedCardsContainer.innerHTML = '';
 
-        const randomCards = generateRandomCards(3, totalCards);
+        const randomCards = generateRandomCards(1, totalCards);
         const cardElements = [];
 
         randomCards.forEach(cardIndex => {
@@ -88,11 +88,10 @@ document.addEventListener('DOMContentLoaded', () => {
         void interpretationContainer.offsetWidth;
         interpretationContainer.classList.add('visible');
 
-        interpText.textContent = "사랑의 운세 (과거 / 현재 / 미래)\n\n" +
-            "첫 번째 카드는 당신의 과거 연애 경험과 무의식을,\n" +
-            "두 번째 카드는 현재의 상황과 감정을,\n" +
-            "세 번째 카드는 앞으로 다가올 사랑의 흐름을 보여줍니다.\n" +
-            "전체적인 조화를 통해 사랑의 경로를 탐색해보세요.";
+        interpText.textContent = "사랑의 운세\n\n" +
+            "선택하신 카드는 당신의 현재 연애운과\n" +
+            "사랑에 대한 조언을 담고 있습니다.\n" +
+            "카드의 의미를 마음 깊이 새겨보세요.";
 
         interpretationContainer.scrollIntoView({ behavior: 'smooth' });
     }

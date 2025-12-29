@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const totalCards = 22;
     const selectedCards = new Set();
-    const MAX_SELECTION = 3;
+    const MAX_SELECTION = 1;
 
     for (let i = 0; i < totalCards; i++) {
         const card = document.createElement('div');
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
             card.classList.remove('selected');
         } else {
             if (selectedCards.size >= MAX_SELECTION) {
-                alert('3장까지만 선택할 수 있습니다.');
+                alert('1장까지만 선택할 수 있습니다.');
                 return;
             }
             selectedCards.add(index);
@@ -48,11 +48,11 @@ document.addEventListener('DOMContentLoaded', () => {
         cardsGrid.style.display = 'none';
         resultContainer.classList.add('hidden');
         titleObj.textContent = "재물의 확인";
-        descObj.textContent = "카드 3장이 당신의 재물을 이야기합니다...";
+        descObj.textContent = "카드 1장이 당신의 재물을 이야기합니다...";
         revealedCardsContainer.classList.remove('hidden');
         revealedCardsContainer.innerHTML = '';
 
-        const randomCards = generateRandomCards(3, totalCards);
+        const randomCards = generateRandomCards(1, totalCards);
         const cardElements = [];
 
         randomCards.forEach(cardIndex => {
@@ -88,11 +88,10 @@ document.addEventListener('DOMContentLoaded', () => {
         void interpretationContainer.offsetWidth;
         interpretationContainer.classList.add('visible');
 
-        interpText.textContent = "금전운 흐름 (기반 / 과정 / 결과)\n\n" +
-            "첫 번째 카드는 당신의 현재 재정적 기반을,\n" +
-            "두 번째 카드는 돈을 버는 과정이나 기회를,\n" +
-            "세 번째 카드는 그로 인한 결과나 미래의 풍요를 보여줍니다.\n" +
-            "신중한 계획과 실행으로 운을 잡으세요.";
+        interpText.textContent = "금전운 흐름\n\n" +
+            "선택하신 카드는 당신의 현재 재정적 상황과\n" +
+            "앞으로의 잠재적인 기회 또는 주의할 점을 보여줍니다.\n" +
+            "카드의 메시지를 통해 지혜로운 경제 활동을 계획해보세요.";
 
         interpretationContainer.scrollIntoView({ behavior: 'smooth' });
     }
