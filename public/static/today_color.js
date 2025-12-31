@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Logic mostly identical, text updated
     const cardsGrid = document.getElementById('cardsGrid');
     const resultContainer = document.getElementById('resultContainer');
     const viewResultBtn = document.getElementById('viewResultBtn');
@@ -12,6 +11,37 @@ document.addEventListener('DOMContentLoaded', () => {
     const totalCards = 22;
     const selectedCards = new Set();
     const MAX_SELECTION = 1;
+    let cardData = [];
+
+    // Load card data from text file
+    loadCardData();
+
+    async function loadCardData() {
+        try {
+            const response = await fetch('/one/color.txt');
+            if (!response.ok) throw new Error('Network response was not ok');
+            const text = await response.text();
+
+            // Parse lines
+            const lines = text.trim().split('\n');
+            cardData = lines.map(line => {
+                // Format: Name/Color/Meaning/Message
+                const parts = line.split('/');
+                if (parts.length >= 4) {
+                    return {
+                        name: parts[0].trim(),
+                        color: parts[1].trim(),
+                        meaning: parts[2].trim(),
+                        message: parts[3].trim().replace(/^"|"$/g, '') // Remove quotes if present
+                    };
+                }
+                return null;
+            }).filter(item => item !== null);
+
+        } catch (error) {
+            console.error('Failed to load card data:', error);
+        }
+    }
 
     for (let i = 0; i < totalCards; i++) {
         const card = document.createElement('div');
@@ -52,7 +82,14 @@ document.addEventListener('DOMContentLoaded', () => {
         revealedCardsContainer.classList.remove('hidden');
         revealedCardsContainer.innerHTML = '';
 
+        // In this logic, we use the random card generation for the visual effect but 
+        // effectively we pick one card. Since the user didn't pick specific cards (blind pick from grid),
+        // we essentially assign a random result here. 
+        // Note: The previous logic picked a random card *after* clicking 'View Result'.
+        // We will maintain that behavior as 'blind pick'.
+
         const randomCards = generateRandomCards(1, totalCards);
+        const selectedCardIndex = randomCards[0];
         const cardElements = [];
 
         randomCards.forEach(cardIndex => {
@@ -79,19 +116,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         setTimeout(() => {
-            showInterpretation();
+            showInterpretation(selectedCardIndex);
         }, (cardElements.length * 800) + 500);
     }
 
-    function showInterpretation() {
+    function showInterpretation(cardIndex) {
         interpretationContainer.classList.remove('hidden');
-        void interpretationContainer.offsetWidth;
+        void interpretationContainer.offsetWidth; // Trigger reflow
         interpretationContainer.classList.add('visible');
 
-        interpText.textContent = "오늘의 행운 컬러입니다.\n\n" +
-            "선택하신 카드의 에너지는 당신에게 활력과 안정을 주는 색상과 연결되어 있습니다.\n" +
-            "이 컬러를 옷이나 소품에 활용하면 긍정적인 기운을 얻을 수 있을 것입니다.\n" +
-            "자신의 감각을 믿고 하루를 다채롭게 채워보세요.";
+        const data = cardData[cardIndex];
+
+        if (data) {
+            interpText.innerHTML = `
+                <div class="result-line name">${data.name}</div>
+                <div class="result-line color">${data.color}</div>
+                <div class="result-line meaning">${data.meaning}</div>
+                <div class="result-line message">"${data.message}"</div>
+            `;
+        } else {
+            interpText.textContent = "결과를 불러오는 중 오류가 발생했습니다.";
+        }
 
         interpretationContainer.scrollIntoView({ behavior: 'smooth' });
     }

@@ -31,3 +31,49 @@
 .interp-title {
     border-bottom-color: rgba(255, 183, 197, 0.2);
 }
+
+.result-line {
+    margin-bottom: 0.8rem;
+}
+
+.result-line.name {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #ffb7c5;
+    border-bottom: 1px dashed rgba(255, 183, 197, 0.3);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.result-line.keyword {
+    font-size: 0.95rem;
+    color: #e0d0f0;
+    margin-bottom: 1rem;
+}
+
+.result-line.keyword .label {
+    color: #ffd700;
+    font-weight: bold;
+    margin-right: 0.5rem;
+}
+
+.result-line.fortune {
+    font-size: 1rem;
+    color: #fff;
+    line-height: 1.6;
+}
+
+.result-line.tip {
+    margin-top: 1.5rem;
+    font-style: italic;
+    color: #fff;
+    padding: 1rem;
+    background: rgba(255, 105, 180, 0.1);
+    border-radius: 8px;
+    border-left: 3px solid #ff69b4;
+}
+
+.result-line.tip .tip-icon {
+    color: #ff69b4;
+    margin-right: 0.5rem;
+}

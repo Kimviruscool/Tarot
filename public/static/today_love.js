@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 3-Card Logic for Love
     const cardsGrid = document.getElementById('cardsGrid');
     const resultContainer = document.getElementById('resultContainer');
     const viewResultBtn = document.getElementById('viewResultBtn');
@@ -12,6 +11,37 @@ document.addEventListener('DOMContentLoaded', () => {
     const totalCards = 22;
     const selectedCards = new Set();
     const MAX_SELECTION = 1;
+    let cardData = [];
+
+    // Load card data
+    loadCardData();
+
+    async function loadCardData() {
+        try {
+            const response = await fetch('/one/love.txt');
+            if (!response.ok) throw new Error('Network response was not ok');
+            const text = await response.text();
+
+            // Parse lines
+            const lines = text.trim().split('\n');
+            cardData = lines.map(line => {
+                // Format: Name/Keyword/Fortune/Tip
+                const parts = line.split('/');
+                if (parts.length >= 4) {
+                    return {
+                        name: parts[0].trim(),
+                        keyword: parts[1].replace('키워드:', '').trim(),
+                        fortune: parts[2].replace('오늘의 연애운:', '').trim().replace(/^"|"$/g, ''),
+                        tip: parts[3].replace('Love Tip:', '').trim().replace(/^"|"$/g, '')
+                    };
+                }
+                return null;
+            }).filter(item => item !== null);
+
+        } catch (error) {
+            console.error('Failed to load card data:', error);
+        }
+    }
 
     for (let i = 0; i < totalCards; i++) {
         const card = document.createElement('div');
@@ -53,6 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
         revealedCardsContainer.innerHTML = '';
 
         const randomCards = generateRandomCards(1, totalCards);
+        const selectedCardIndex = randomCards[0];
         const cardElements = [];
 
         randomCards.forEach(cardIndex => {
@@ -79,19 +110,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         setTimeout(() => {
-            showInterpretation();
+            showInterpretation(selectedCardIndex);
         }, (cardElements.length * 800) + 500);
     }
 
-    function showInterpretation() {
+    function showInterpretation(cardIndex) {
         interpretationContainer.classList.remove('hidden');
         void interpretationContainer.offsetWidth;
         interpretationContainer.classList.add('visible');
 
-        interpText.textContent = "사랑의 운세\n\n" +
-            "선택하신 카드는 당신의 현재 연애운과\n" +
-            "사랑에 대한 조언을 담고 있습니다.\n" +
-            "카드의 의미를 마음 깊이 새겨보세요.";
+        const data = cardData[cardIndex];
+
+        if (data) {
+            interpText.innerHTML = `
+                <div class="result-line name">${data.name}</div>
+                <div class="result-line keyword"><span class="label">Key:</span> ${data.keyword}</div>
+                <div class="result-line fortune">${data.fortune}</div>
+                <div class="result-line tip"><span class="tip-icon">♥</span> ${data.tip}</div>
+            `;
+        } else {
+            interpText.textContent = "결과를 불러오는 중 오류가 발생했습니다.";
+        }
 
         interpretationContainer.scrollIntoView({ behavior: 'smooth' });
     }

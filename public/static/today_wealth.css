@@ -22,3 +22,50 @@
     content: '$';
     color: rgba(255, 215, 0, 0.2);
 }
+
+.result-line {
+    margin-bottom: 0.8rem;
+}
+
+.result-line.name {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #ffd700;
+    border-bottom: 1px dashed rgba(255, 215, 0, 0.3);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.result-line.keyword {
+    font-size: 0.95rem;
+    color: #d0e0ff;
+    margin-bottom: 1rem;
+}
+
+.result-line.keyword .label {
+    color: #daa520;
+    font-weight: bold;
+    margin-right: 0.5rem;
+}
+
+.result-line.interpretation {
+    font-size: 1rem;
+    color: #fff;
+    line-height: 1.6;
+}
+
+.result-line.tip {
+    margin-top: 1.5rem;
+    font-style: italic;
+    color: #fff;
+    padding: 1rem;
+    background: rgba(218, 165, 32, 0.1);
+    border-radius: 8px;
+    border-left: 3px solid #daa520;
+}
+
+.result-line.tip .tip-icon {
+    color: #ffd700;
+    font-weight: bold;
+    margin-right: 0.5rem;
+}

@@ -22,3 +22,36 @@
     content: 'C';
     color: rgba(255, 255, 255, 0.2);
 }
+
+.result-line {
+    margin-bottom: 0.8rem;
+}
+
+.result-line.name {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #ffd700;
+    border-bottom: 1px dashed rgba(255, 215, 0, 0.3);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.result-line.color {
+    font-size: 1rem;
+    color: #fff;
+}
+
+.result-line.meaning {
+    font-size: 0.95rem;
+    color: #d0c0e0;
+}
+
+.result-line.message {
+    margin-top: 1.5rem;
+    font-style: italic;
+    color: #fff;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    border-left: 3px solid #ffd700;
+}
