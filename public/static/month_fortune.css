@@ -1,25 +1,92 @@
 @import url('daily_fortune.css');
 
-/* Monthly fortune - maybe cooler colors */
-/* Title colors */
+@import url('choice.css');
+
+/* Reuse some variables or base styles if they exist, 
+   but explicitly defining here to match today_wealth visual exactly */
+
+/* Title colors specific to this page if needed, or generally gold/purple */
 .main-title,
 .title,
 .interp-title {
-    color: #87ceeb;
-    border-color: #87ceeb;
+    color: #ffd700;
+    text-shadow: 0 0 10px rgba(218, 165, 32, 0.5);
+    margin-bottom: 1.5rem;
+    text-align: center;
 }
 
+/* Card Selection Styles */
 .tarot-card-select {
-    border-color: #87ceeb;
-    background: linear-gradient(135deg, #0b1a2e 0%, #1b2a3d 100%);
+    border-color: #daa520;
+    background: linear-gradient(135deg, #2e2b0b 0%, #3d3a1b 100%);
 }
 
 .tarot-card-select.selected {
-    border-color: #00bfff;
-    box-shadow: 0 0 20px rgba(0, 191, 255, 0.6);
+    border-color: #ffd700;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
 }
 
-.tarot-card-select::after {
-    content: 'M';
-    color: rgba(173, 216, 230, 0.2);
+/* Result Section Styles */
+.interpretation-container {
+    background-color: rgba(20, 10, 30, 0.95);
+    border: 1px solid #ffd700;
+    border-radius: 15px;
+    padding: 3rem;
+    max-width: 800px;
+    width: 90%;
+    margin: 2rem auto;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+    text-align: center;
+}
+
+.result-card {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.result-card:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.section-title {
+    font-size: 1.4rem;
+    color: #ffd700;
+    margin-bottom: 1rem;
+    display: inline-block;
+    border-bottom: 2px solid #daa520;
+    padding-bottom: 0.3rem;
+}
+
+/* Typography matching today_wealth */
+.result-line.name {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #ffd700;
+    margin-bottom: 1rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.result-line.interpretation {
+    font-size: 1.1rem;
+    color: #fff;
+    line-height: 1.8;
+    word-break: keep-all;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .interpretation-container {
+        padding: 1.5rem;
+    }
+
+    .result-line.name {
+        font-size: 1.1rem;
+    }
+
+    .result-line.interpretation {
+        font-size: 0.95rem;
+    }
 }
