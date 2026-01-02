@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 3-Card Logic for Month Fortune
+    // 3-Card Logic for Month Fortune (Past / Present / Future)
     const cardsGrid = document.getElementById('cardsGrid');
     const resultContainer = document.getElementById('resultContainer');
     const viewResultBtn = document.getElementById('viewResultBtn');
@@ -13,23 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const selectedCards = new Set();
     const MAX_SELECTION = 3;
 
-    // Store loaded interpretations
-    let fortuneData = {
-        past: {},
-        present: {},
-        future: {}
-    };
+    // Cache for fortune texts (stores {name, content})
+    let pastTexts = {};
+    let presentTexts = {};
+    let futureTexts = {};
 
-    // Load all fortune data on page load
-    Promise.all([
-        loadFortuneData('month/monthfortune/past.txt', 'past'),
-        loadFortuneData('month/monthfortune/present.txt', 'present'),
-        loadFortuneData('month/monthfortune/future.txt', 'future')
-    ]).then(() => {
-        console.log('All fortune data loaded');
-    }).catch(err => {
-        console.error('Failed to load fortune data:', err);
-    });
+    // Load texts on startup
+    loadFortuneTexts();
 
     for (let i = 0; i < totalCards; i++) {
         const card = document.createElement('div');
@@ -70,24 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
         revealedCardsContainer.classList.remove('hidden');
         revealedCardsContainer.innerHTML = '';
 
-        // Use the actual generated random cards logic or strictly use user selection?
-        // The previous logic generated random cards regardless of selection. 
-        // Typically user selection is visual, and the "tarot" is random "shuffle" behind the scenes, 
-        // OR the user's specific choice matters. 
-        // Given the prompt "First selected card..., Second selected card...", 
-        // it implies using the order of selection?
-        // But the previous code logic was `generateRandomCards`.
-        // However, usually online tarot acts as: User picks 3 -> these 3 are revealed.
-        // Let's use the random approach as per the existing code's implication of "shuffling",
-        // BUT to be more "authentic" to the "pick", let's map the user's *selection slots* to random values 
-        // OR just assume the user "picked" them and that IS the result.
-        // Most simple apps: The user clicked card X, Y, Z. But are those X, Y, Z specific images?
-        // In the grid `dataset.index = i`. So card 0 is Fool, card 1 Magician etc?
-        // If the grid is just "Card Backs" then we assign meaning NOW.
-        // If the grid was "Face Up" (it wasn't), then it's fixed.
-        // The grid is "tarot-card-select" which usually has a back image.
-        // So we should GENERATE 3 random cards to assign to the 3 "slots" the user picked.
-
         const randomCards = generateRandomCards(3, totalCards);
         const cardElements = [];
 
@@ -119,59 +91,42 @@ document.addEventListener('DOMContentLoaded', () => {
         }, (cardElements.length * 800) + 500);
     }
 
-    function showInterpretation(cards) {
+    function showInterpretation(cardIndices) {
         interpretationContainer.classList.remove('hidden');
-        void interpretationContainer.offsetWidth;
+        void interpretationContainer.offsetWidth; // Trigger reflow
         interpretationContainer.classList.add('visible');
 
-        // cards is [cardIndex1, cardIndex2, cardIndex3]
-        const pastCard = cards[0];
-        const presentCard = cards[1];
-        const futureCard = cards[2];
+        const card1 = cardIndices[0];
+        const card2 = cardIndices[1];
+        const card3 = cardIndices[2];
 
-        // Retrieve text
-        const pastRaw = fortuneData.past[pastCard] || "내용을 불러올 수 없습니다.";
-        const presentRaw = fortuneData.present[presentCard] || "내용을 불러올 수 없습니다.";
-        const futureRaw = fortuneData.future[futureCard] || "내용을 불러올 수 없습니다.";
+        const data1 = pastTexts[card1] || { name: 'Unknown', content: "해석을 불러오는 중 오류가 발생했습니다." };
+        const data2 = presentTexts[card2] || { name: 'Unknown', content: "해석을 불러오는 중 오류가 발생했습니다." };
+        const data3 = futureTexts[card3] || { name: 'Unknown', content: "해석을 불러오는 중 오류가 발생했습니다." };
 
-        let htmlContent = '';
+        let html = '';
 
-        htmlContent += createFortuneSection("과거의 메시지", pastRaw);
-        htmlContent += createFortuneSection("현재의 메시지", presentRaw);
-        htmlContent += createFortuneSection("미래의 메시지", futureRaw);
+        // Similar styling to Month Love / Month Wealth but with appropriate color theme (Gold/Purple default)
+        // Using common classes found in today_love.css/month_fortune.css
+        html += `<div class="result-section">`;
+        html += `<div class="result-line name" style="color: #ffd700; margin-top:20px;">[과거: 경험과 배경] <br> ${data1.name}</div>`;
+        html += `<div class="result-line fortune">${data1.content}</div>`;
+        html += `</div>`;
 
-        interpText.innerHTML = htmlContent;
+        html += `<div class="result-section">`;
+        html += `<div class="result-line name" style="color: #ffd700; margin-top:20px;">[현재: 상황과 흐름] <br> ${data2.name}</div>`;
+        html += `<div class="result-line fortune">${data2.content}</div>`;
+        html += `</div>`;
+
+        html += `<div class="result-section">`;
+        html += `<div class="result-line name" style="color: #ffd700; margin-top:20px;">[미래: 결과와 조언] <br> ${data3.name}</div>`;
+        html += `<div class="result-line fortune">${data3.content}</div>`;
+        html += `</div>`;
+
+        interpText.innerHTML = html;
 
         interpretationContainer.scrollIntoView({ behavior: 'smooth' });
     }
-
-    function createFortuneSection(title, rawText) {
-        // Expected format: "Number. Name (English Name): Interpretation"
-        // We want to split out Name and Interpretation.
-        let name = "";
-        let desc = rawText;
-
-        const colonIndex = rawText.indexOf(':');
-        if (colonIndex !== -1) {
-            name = rawText.substring(0, colonIndex).trim();
-            desc = rawText.substring(colonIndex + 1).trim();
-        } else {
-            // Fallback if no colon
-            name = rawText;
-            desc = "";
-        }
-
-        return `
-            <div class="result-card">
-                <div class="section-title">${title}</div>
-                <div class="result-line name">${name}</div>
-                <div class="result-line interpretation">${desc}</div>
-            </div>
-        `;
-    }
-
-    //Removed helper function getCardName as it is no longer used.
-
 
     function generateRandomCards(count, max) {
         const nums = new Set();
@@ -181,26 +136,55 @@ document.addEventListener('DOMContentLoaded', () => {
         return Array.from(nums);
     }
 
-    async function loadFortuneData(url, key) {
+    async function loadFortuneTexts() {
         try {
-            const response = await fetch(url);
-            const text = await response.text();
-            parseFortuneText(text, key);
+            const [pastRes, presentRes, futureRes] = await Promise.all([
+                fetch('/month/monthfortune/past.txt'),
+                fetch('/month/monthfortune/present.txt'),
+                fetch('/month/monthfortune/future.txt')
+            ]);
+
+            if (pastRes.ok) pastTexts = parseTextFile(await pastRes.text());
+            if (presentRes.ok) presentTexts = parseTextFile(await presentRes.text());
+            if (futureRes.ok) futureTexts = parseTextFile(await futureRes.text());
+
         } catch (error) {
-            console.error(`Error loading ${url}:`, error);
+            console.error("Fortune text loading failed:", error);
         }
     }
 
-    function parseFortuneText(text, key) {
+    function parseTextFile(text) {
+        const map = {};
         const lines = text.split('\n');
-        lines.forEach(line => {
-            if (!line.trim()) return;
-            // Assuming format "0. Name: Description" or similar where it starts with number
-            const match = line.match(/^(\d+)\./);
-            if (match) {
-                const cardIndex = parseInt(match[1], 10);
-                fortuneData[key][cardIndex] = line.trim();
+        for (let line of lines) {
+            line = line.trim();
+            if (!line) continue;
+            // Format: "0. Name: Content"
+
+            const dotIndex = line.indexOf('.');
+            if (dotIndex === -1) continue;
+
+            const indexStr = line.substring(0, dotIndex);
+            const index = parseInt(indexStr, 10);
+            if (isNaN(index)) continue;
+
+            // Extract Name
+            // e.g. "0. 바보 (The Fool): ..."
+            const colonIndex = line.indexOf(':');
+            let name = "";
+            let content = "";
+
+            if (colonIndex !== -1) {
+                name = line.substring(dotIndex + 1, colonIndex).trim();
+                content = line.substring(colonIndex + 1).trim();
+            } else {
+                // Fallback
+                name = "Unknown";
+                content = line.substring(dotIndex + 1).trim();
             }
-        });
+
+            map[index] = { name, content };
+        }
+        return map;
     }
 });

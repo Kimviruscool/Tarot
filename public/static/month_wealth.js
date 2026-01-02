@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 3-Card Logic for Month Wealth
+    // 3-Card Logic for Month Wealth (Past / Present / Future)
     const cardsGrid = document.getElementById('cardsGrid');
     const resultContainer = document.getElementById('resultContainer');
     const viewResultBtn = document.getElementById('viewResultBtn');
@@ -12,6 +12,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const totalCards = 22;
     const selectedCards = new Set();
     const MAX_SELECTION = 3;
+
+    // Cache for fortune texts (stores {name, content})
+    let pastTexts = {};
+    let presentTexts = {};
+    let futureTexts = {};
+
+    // Load texts on startup - Note correct directory 'monethcash'
+    loadFortuneTexts();
 
     for (let i = 0; i < totalCards; i++) {
         const card = document.createElement('div');
@@ -52,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
         revealedCardsContainer.classList.remove('hidden');
         revealedCardsContainer.innerHTML = '';
 
+        // Generate 3 unique random cards for the positions
         const randomCards = generateRandomCards(3, totalCards);
         const cardElements = [];
 
@@ -79,20 +88,43 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         setTimeout(() => {
-            showInterpretation();
+            showInterpretation(randomCards);
         }, (cardElements.length * 800) + 500);
     }
 
-    function showInterpretation() {
+    function showInterpretation(cardIndices) {
         interpretationContainer.classList.remove('hidden');
-        void interpretationContainer.offsetWidth;
+        void interpretationContainer.offsetWidth; // Trigger reflow
         interpretationContainer.classList.add('visible');
 
-        interpText.textContent = "월간 금전운 (수입 / 지출 / 조언)\n\n" +
-            "첫 번째 카드는 이달의 수입원이나 이득을,\n" +
-            "두 번째 카드는 지출이나 주의해야 할 요소를,\n" +
-            "세 번째 카드는 금전적 안정을 위한 조언을 담고 있습니다.\n" +
-            "현명한 관리로 풍요를 유지하세요.";
+        const card1 = cardIndices[0];
+        const card2 = cardIndices[1];
+        const card3 = cardIndices[2];
+
+        const data1 = pastTexts[card1] || { name: 'Unknown', content: "해석을 불러오는 중 오류가 발생했습니다." };
+        const data2 = presentTexts[card2] || { name: 'Unknown', content: "해석을 불러오는 중 오류가 발생했습니다." };
+        const data3 = futureTexts[card3] || { name: 'Unknown', content: "해석을 불러오는 중 오류가 발생했습니다." };
+
+        let html = '';
+
+        // CSS classes reused from today_wealth.css/month_wealth.css
+        // Assuming consistent styling with month_love
+        html += `<div class="result-section">`;
+        html += `<div class="result-line name" style="color: #ffd700; margin-top:20px;">[과거: 수입과 흐름] <br> ${data1.name}</div>`;
+        html += `<div class="result-line fortune">${data1.content}</div>`;
+        html += `</div>`;
+
+        html += `<div class="result-section">`;
+        html += `<div class="result-line name" style="color: #ffd700; margin-top:20px;">[현재: 지출과 상황] <br> ${data2.name}</div>`;
+        html += `<div class="result-line fortune">${data2.content}</div>`;
+        html += `</div>`;
+
+        html += `<div class="result-section">`;
+        html += `<div class="result-line name" style="color: #ffd700; margin-top:20px;">[미래: 조언과 전망] <br> ${data3.name}</div>`;
+        html += `<div class="result-line fortune">${data3.content}</div>`;
+        html += `</div>`;
+
+        interpText.innerHTML = html;
 
         interpretationContainer.scrollIntoView({ behavior: 'smooth' });
     }
@@ -103,5 +135,69 @@ document.addEventListener('DOMContentLoaded', () => {
             nums.add(Math.floor(Math.random() * max));
         }
         return Array.from(nums);
+    }
+
+    async function loadFortuneTexts() {
+        try {
+            // Note: directory is 'monethcash' based on filesystem check
+            const [pastRes, presentRes, futureRes] = await Promise.all([
+                fetch('/month/monethcash/past.txt'),
+                fetch('/month/monethcash/present.txt'),
+                fetch('/month/monethcash/future.txt')
+            ]);
+
+            if (pastRes.ok) pastTexts = parseTextFile(await pastRes.text());
+            if (presentRes.ok) presentTexts = parseTextFile(await presentRes.text());
+            if (futureRes.ok) futureTexts = parseTextFile(await futureRes.text());
+
+        } catch (error) {
+            console.error("Fortune text loading failed:", error);
+        }
+    }
+
+    function parseTextFile(text) {
+        const map = {};
+        const lines = text.split('\n');
+        for (let line of lines) {
+            line = line.trim();
+            if (!line) continue;
+            // Format example: "0. 바보 (The Fool): 계획적인 소비보다는..."
+
+            const dotIndex = line.indexOf('.');
+            if (dotIndex === -1) continue;
+
+            const indexStr = line.substring(0, dotIndex);
+            const index = parseInt(indexStr, 10);
+            if (isNaN(index)) continue;
+
+            // Extract Name
+            // Prefer Name extracted before colon
+            const colonIndex = line.indexOf(':');
+            let name = "";
+            let content = "";
+
+            if (colonIndex !== -1) {
+                name = line.substring(dotIndex + 1, colonIndex).trim();
+
+                // Extract Content
+                // Check if there are quotes or just text
+                const afterColon = line.substring(colonIndex + 1).trim();
+                const quoteStart = afterColon.indexOf('"');
+                const quoteEnd = afterColon.lastIndexOf('"');
+
+                if (quoteStart !== -1 && quoteEnd !== -1 && quoteEnd > quoteStart) {
+                    content = afterColon.substring(quoteStart + 1, quoteEnd);
+                } else {
+                    content = afterColon;
+                }
+            } else {
+                // Formatting fallback
+                name = "Unknown";
+                content = line.substring(dotIndex + 1).trim();
+            }
+
+            map[index] = { name, content };
+        }
+        return map;
     }
 });
