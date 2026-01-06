@@ -1,6 +1,8 @@
 import os
 from flask import Blueprint, render_template, send_from_directory, current_app, redirect, url_for, request, jsonify
 from ..controller.user_controller import UserController
+import requests
+from firebase_admin import firestore
 
 bp = Blueprint('main', __name__, url_prefix='/')
 
@@ -70,3 +72,40 @@ def terms():
     except Exception as e:
         terms_content = "약관을 불러올 수 없습니다. 관리자에게 문의하세요."
     return render_template('terms.html', terms_content=terms_content)
+
+@bp.route('/payment/verify', method=['POST'])
+def verify_payment():
+    data = request.json
+    imp_uid = data.get('imp_uid')
+    merchant_uid = data.get('merchant_uid')
+
+    #PORTONE API
+    api_key = os.getenv("PORTONE_API_KEY")
+    api_secret = os.getenv("PORTONE_API_SECRET")
+
+    try :
+        #Access Token 발급 요청
+        token_response = requests.post("https://api.iamport.kr/users/getToken", json={"import_key":api_key, "import_secret_key":api_secret}).json()
+        access_token = token_response['response']['access_token']
+
+        #결제 정보 조회
+        payment_response = requests.get(f"https://api.iamport.kr/payments/{imp_uid}",headers={"Authorization":access_token}).json()
+        payment_data = payment_response['response']
+
+        #결제 검증 및 firestore 저장
+        if payment_data['status'] == 'paid' :
+            db = firestore.client()
+            db.collection('payments').document(imp_uid).set({
+                'merchant_uid': merchant_uid,
+                'amount' : payment_data['amount'],
+                'buyer_email':payment_data['buyer_email'],
+                'status':'success',
+                'created_at':firestore.SERVER_TIMESTAMP
+            })
+            return jsonify({'success':True, 'message':'결제 검증 완료'}), 200
+        else :
+            return jsonify({'success':False, 'message':'결제되지 않은 요청입니다.'}),400
+
+    except Exception as e:
+        print(e)
+        return jsonify({'success':False, 'message':str(e)}), 500
