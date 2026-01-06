@@ -8,11 +8,7 @@ bp = Blueprint('main', __name__, url_prefix='/')
 
 @bp.route('/')
 def index():
-    return render_template('index.html')
-
-@bp.route('/choice')
-def home():
-    return render_template('choice.html')
+    return render_template('index.html', portone_mid=os.getenv("VITE_PAYMENT_MID"))
 
 @bp.route('/cards/<path:filename>')
 def cards(filename):
@@ -73,7 +69,7 @@ def terms():
         terms_content = "약관을 불러올 수 없습니다. 관리자에게 문의하세요."
     return render_template('terms.html', terms_content=terms_content)
 
-@bp.route('/payment/verify', method=['POST'])
+@bp.route('/payment/verify', methods=['POST'])
 def verify_payment():
     data = request.json
     imp_uid = data.get('imp_uid')

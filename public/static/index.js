@@ -52,14 +52,14 @@ function payBokchae(pgProvider) {
 
     const IMP = window.IMP;
     // [본인의 가맹점 식별코드로 교체하세요]
-    IMP.init("impXXXXXXXX");
+    IMP.init("{{portone_mid}}");
 
     IMP.request_pay({
         pg: pgProvider,
         pay_method: "card",
         merchant_uid: "bokchae_" + new Date().getTime(),
         name: "미스틱 타로 복채",
-        amount: 3000,
+        amount: 1000,
     }, function (rsp) {
         if (rsp.success) {
             // 서버 검증 요청
