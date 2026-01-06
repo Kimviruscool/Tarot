@@ -16,7 +16,7 @@
 
     <nav class="top-nav">
         <div class="bokchae-container">
-            <span class="bokchae-label">BLESSING</span>
+            <span class="bokchae-label">복채내기</span>
             <button class="btn-mini-pay kakao" onclick="payBokchae('kakaopay')">K</button>
             <button class="btn-mini-pay toss" onclick="payBokchae('tosspay')">T</button>
         </div>
@@ -98,7 +98,10 @@
         </div>
     </main>
 
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+    <script>window.PORTONE_MID = "{{portone_mid}}"</script>
     <script src="static/index.js"></script>
+
 </body>
 
 </html>

@@ -105,3 +105,8 @@ def verify_payment():
     except Exception as e:
         print(e)
         return jsonify({'success':False, 'message':str(e)}), 500
+
+@bp.route('/api/config')
+def get_config():
+    mid = os.getenv('VITE_PAYMENT_MID')
+    return jsonify({"portone_mid":mid})
